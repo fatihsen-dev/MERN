@@ -4,11 +4,9 @@ import blog from "../models/blogModel.js";
 const blogRouter = express.Router();
 
 blogRouter.post("/create-blog", async (req, res) => {
-  console.log(req.body);
-
-  const { title, explanation, text, blogAuthor } = req.body;
-
   try {
+    console.log(req.body);
+    const { title, explanation, text, blogAuthor } = req.body;
     await blog.create({
       title: title,
       explanation: explanation,
@@ -21,17 +19,20 @@ blogRouter.post("/create-blog", async (req, res) => {
     return res.status(400).json({ message: "Blog Oluşturulamadı" });
   }
 });
-blogRouter.post("/all-blogs", (req, res) => {
+
+blogRouter.get("/all-blogs", (req, res) => {
   blog
     .find()
+    .sort({ createdDate: -1 })
     .then((data) => {
-      return res.status(200).json({ Blogs: data });
+      return res.status(200).json({ blogs: data });
     })
     .catch((err) => {
       return res.status(400).json({ message: "Veri bulunamadı" });
     });
 });
-blogRouter.post("/blog-details", async (req, res) => {
+
+blogRouter.use("/blog-details", async (req, res) => {
   blog
     .findById(req.body.id)
     .then((data) => {
@@ -41,10 +42,10 @@ blogRouter.post("/blog-details", async (req, res) => {
       return res.status(400).json({ message: "Veri bulunamadı" });
     });
 });
-
-blogRouter.post("/user-blogs", async (req, res) => {
+blogRouter.get("/user-blogs/:id", async (req, res) => {
+  const id = req.params.id;
   blog
-    .find({ blogAuthor: req.body.id })
+    .find({ blogAuthor: id })
     .then((data) => {
       return res.status(200).json({ data: data });
     })

@@ -28,7 +28,6 @@ userRouter.post("/signup", async (req, res) => {
     return res.status(400).json({ message: error.message });
   }
 });
-
 // localhost:5000/users/signin post request
 userRouter.post("/signin", async (req, res) => {
   try {

@@ -4,7 +4,6 @@ import { NavLink, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { logout } from "../store/authSlice";
 import { useSelector, useDispatch } from "react-redux";
-import Avvvatars from "avvvatars-react";
 
 export default function Nav() {
   const [menu, setMenu] = useState(false);
@@ -53,11 +52,21 @@ export default function Nav() {
               tabIndex={0}
               className='relative flex justify-center items-center h-full px-2 py-1 select-none group'>
               <span className='cursor-pointer flex items-center gap-1.5'>
-                <Avvvatars style={`shape`} size='25' value={user?.fullname} />
+                <img
+                  className='w-7 h-7 object-cover rounded-full'
+                  src='https://picsum.photos/200/200'
+                  alt='https://picsum.photos/200/200'
+                />
                 <span>{user?.fullname ?? "Default Name"}</span>
               </span>
-              <ul className='z-10 absolute w-40 rounded-sm p-1 hidden text-sm flex-col gap-1 bg-[#eee] text-black top-11 group-focus-within:flex'>
-                <li
+              <ul className='z-10 absolute w-40 rounded-sm hidden p-1 text-sm flex-col gap-1 bg-[#eee] text-black top-11 group-focus-within:flex'>
+                <NavLink
+                  to='/profil'
+                  className='cursor-pointer px-2 py-1 hover:bg-[#e0e0e0] rounded-sm'>
+                  Profilim
+                </NavLink>
+                <hr />
+                <span
                   onClick={() => {
                     dispatch(logout());
                     navigate("/signin");
@@ -65,12 +74,7 @@ export default function Nav() {
                   }}
                   className='cursor-pointer px-2 py-1 hover:bg-[#e0e0e0] rounded-sm'>
                   Çıkış
-                </li>
-                <NavLink
-                  to='/profil'
-                  className='cursor-pointer px-2 py-1 hover:bg-[#e0e0e0] rounded-sm'>
-                  Profilim
-                </NavLink>
+                </span>
               </ul>
             </div>
           ) : (
