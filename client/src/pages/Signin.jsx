@@ -20,11 +20,12 @@ export default function Signin() {
     login(formData)
       .then((res) => {
         toast.success("Giriş yapıldı.");
-        localStorage.setItem("user", JSON.stringify(res.data.user));
-        dispatch(signin(formData));
+        let { _id, email, fullname } = res.data.user;
+        localStorage.setItem("key", JSON.stringify({ id: _id }));
+        dispatch(signin({ id: _id, email, fullname }));
         navigate("/");
       })
-      .catch((err) => toast.error(err.response.data.message + " !"));
+      .catch((err) => toast.error(err.response.data.message));
   };
 
   return (

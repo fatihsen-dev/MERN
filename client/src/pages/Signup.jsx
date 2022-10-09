@@ -3,9 +3,11 @@ import MaskInput from "react-maskinput";
 import { useState } from "react";
 import { register } from "../axios";
 import toast from "react-hot-toast";
+import { useEffect } from "react";
 
 export default function Signup() {
   const [password, setPassword] = useState("");
+  const [disabled, setDisabled] = useState(true);
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -14,6 +16,17 @@ export default function Signup() {
     phoneNumber: "",
     password: "",
   });
+
+  useEffect(() => {
+    if (
+      formData.fullname.length > 4 &&
+      formData.email.length > 5 &&
+      formData.password.length > 7 &&
+      formData.phoneNumber.length > 14
+    ) {
+      setDisabled(false);
+    }
+  }, [formData]);
 
   const submitHandle = (e) => {
     e.preventDefault();
@@ -25,17 +38,25 @@ export default function Signup() {
         formData.password.length > 0 &&
         formData.phoneNumber.length > 0
       ) {
-        register(formData)
-          .then((res) => {
-            toast.success("Giriş yapıldı.");
-            navigate("/signin");
-          })
-          .catch((err) => toast.error(err.response.data.message + " !"));
+        if (formData.fullname.length > 4) {
+          if (formData.password.length >= 8) {
+            register(formData)
+              .then((res) => {
+                toast.success("Kayıt oldunuz");
+                navigate("/signin");
+              })
+              .catch((err) => toast.error(err.response.data.message));
+          } else {
+            toast.error("Şifreniz 8 karakterden az olamaz");
+          }
+        } else {
+          toast.error("İsminiz çok kısa");
+        }
       } else {
-        toast.error("Lütfen boş alanları doldurun.");
+        toast.error("Lütfen boş alanları doldurun");
       }
     } else {
-      toast.error("Şifreler eşleşmiyor !");
+      toast.error("Şifreler eşleşmiyor");
     }
   };
 
@@ -128,6 +149,7 @@ export default function Signup() {
         </div>
         <div className='flex items-center justify-between'>
           <button
+            disabled={disabled}
             className='bg-blue-500 hover:bg-blue-600 text-white font-medium py-1.5 px-3 rounded focus:outline-none focus:shadow-outline disabled:bg-blue-500/50'
             type='submit'>
             Kayıt ol

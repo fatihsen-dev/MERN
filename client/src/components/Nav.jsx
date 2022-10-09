@@ -1,8 +1,11 @@
 import React from "react";
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 import { logout } from "../store/authSlice";
 import { useSelector, useDispatch } from "react-redux";
+import Avvvatars from "avvvatars-react";
+
 export default function Nav() {
   const [menu, setMenu] = useState(false);
 
@@ -12,86 +15,64 @@ export default function Nav() {
 
   return (
     <div className='bg-blue-500'>
-      <nav className='container mx-auto flex items-center justify-between text-white font-medium px-3 2xl:px-0 xl:px-0 lg:px-0 md:px-0 sm:px-0 py-2 2xl:py-0 xl:py-0 lg:py-0 md:py-0.5 sm:py-0.5'>
-        <h1 className='font-medium text-xl whitespace-nowrap'>
+      <nav className='container mx-auto flex items-centerustify-between text-white font-medium px-3 2xl:px-0 xl:px-0 lg:px-0 md:px-0 sm:px-0 py-2 2xl:py-0 xl:py-0 lg:py-0 md:py-0.5 sm:py-0.5 justify-between'>
+        <h1 className='flex items-center font-medium text-xl whitespace-nowrap'>
           <NavLink to='/'>Mern App</NavLink>
         </h1>
         <div className='flex items-center gap-3'>
           <ul className='hidden gap-1 2xl:flex xl:flex lg:flex md:flex sm:hidden'>
             <li className='py-3 px-3 flex justify-center items-center relative cursor-pointer'>
-              <NavLink className='hover:text-white/80 transition-colors z-10' to=''>
+              <NavLink className='hover:text-white/80 transition-colors z-10' to='/'>
                 Anasayfa
               </NavLink>
             </li>
-            <li
-              tabIndex={0}
-              className='py-3 px-3 flex justify-center items-center relative cursor-pointer group'>
-              <span
-                className='group-hover:text-white/80 group-focus-within:text-white/80 flex items-center gap-1 transition-colors z-10'
-                to='b'>
-                Hakkımızda
-                <svg
-                  width='22'
-                  height='22'
-                  viewBox='0 0 24 24'
-                  fill='none'
-                  className='fill-white group-focus-within:fill-white/80 group-hover:fill-white/80 flex group-focus-within:hidden'
-                  xmlns='http://www.w3.org/2000/svg'>
-                  <path d='M12 15.713L18.01 9.70299L16.597 8.28799L12 12.888L7.40399 8.28799L5.98999 9.70199L12 15.713Z'></path>
-                </svg>
-                <svg
-                  width='22'
-                  height='22'
-                  viewBox='0 0 24 24'
-                  className='fill-white group-focus-within:fill-white/80 group-hover:fill-white/80 hidden group-focus-within:flex'
-                  fill='none'
-                  xmlns='http://www.w3.org/2000/svg'>
-                  <path d='M12 8.28799L5.98999 14.298L7.40399 15.713L12.004 11.113L16.604 15.713L18.011 14.298L12 8.28799Z'></path>
-                </svg>
-              </span>
-              <ul className='-left-4 absolute w-40 overflow-hidden rounded-sm bg-blue-400 top-11 flex flex-col pointer-events-none opacity-0 group-focus-within:pointer-events-auto group-focus-within:opacity-100 text-white'>
-                <li className='flex hover:bg-blue-500/20'>
-                  <NavLink className='flex py-1.5 w-full px-3' to='/'>
-                    ACM Nedir
-                  </NavLink>
-                </li>
-                <li className='flex hover:bg-blue-500/20'>
-                  <NavLink className='flex py-1.5 w-full px-3' to='/'>
-                    Neler Yapıyoruz
-                  </NavLink>
-                </li>
-                <li className='flex hover:bg-blue-500/20'>
-                  <NavLink className='flex py-1.5 w-full px-3' to='/'>
-                    Ekibimiz
-                  </NavLink>
-                </li>
-              </ul>
-            </li>
             <li className='py-3 px-3 flex justify-center items-center relative cursor-pointer'>
-              <NavLink className='hover:text-white/80 transition-colors z-10' to='/'>
-                Duyurular
-              </NavLink>
-            </li>
-            <li className='py-3 px-3 flex justify-center items-center relative cursor-pointer'>
-              <NavLink className='hover:text-white/80 transition-colors z-10' to='/'>
+              <NavLink
+                className='hover:text-white/80 transition-colors z-10'
+                to='/postlar'>
                 Blog
               </NavLink>
             </li>
             <li className='py-3 px-3 flex justify-center items-center relative cursor-pointer'>
-              <NavLink className='hover:text-white/80 transition-colors z-10' to='/'>
-                İletişim
+              <NavLink
+                className='hover:text-white/80 transition-colors z-10'
+                to='/duyurular'>
+                Duyurular
+              </NavLink>
+            </li>
+            <li className='py-3 px-3 flex justify-center items-center relative cursor-pointer'>
+              <NavLink
+                className='hover:text-white/80 transition-colors z-10'
+                to='iletisim'>
+                Hakkımızda & İletişim
               </NavLink>
             </li>
           </ul>
           {user ? (
-            <button
-              onClick={() => {
-                dispatch(logout());
-                navigate("/signin");
-              }}
-              className=' text-blue-500 bg-white px-5 py-1 rounded-sm hover:/90'>
-              Çıkış
-            </button>
+            <div
+              tabIndex={0}
+              className='relative flex justify-center items-center h-full px-2 py-1 select-none group'>
+              <span className='cursor-pointer flex items-center gap-1.5'>
+                <Avvvatars style={`shape`} size='25' value={user?.fullname} />
+                <span>{user?.fullname ?? "Default Name"}</span>
+              </span>
+              <ul className='z-10 absolute w-40 rounded-sm p-1 hidden text-sm flex-col gap-1 bg-[#eee] text-black top-11 group-focus-within:flex'>
+                <li
+                  onClick={() => {
+                    dispatch(logout());
+                    navigate("/signin");
+                    toast.success("Çıkış yapılı.");
+                  }}
+                  className='cursor-pointer px-2 py-1 hover:bg-[#e0e0e0] rounded-sm'>
+                  Çıkış
+                </li>
+                <NavLink
+                  to='/profil'
+                  className='cursor-pointer px-2 py-1 hover:bg-[#e0e0e0] rounded-sm'>
+                  Profilim
+                </NavLink>
+              </ul>
+            </div>
           ) : (
             <NavLink
               className=' text-blue-500 bg-white px-5 py-1 rounded-sm hover:/90'
@@ -126,62 +107,24 @@ export default function Nav() {
           </div>
           <ul className='flex flex-col text-white pb-3'>
             <li className='px-4 py-1.5 hover:bg-blue-600 cursor-pointer'>
-              <NavLink to='/'>Anasayfa</NavLink>
+              <NavLink onClick={() => setMenu(false)} className='flex' to='/'>
+                Anasayfa
+              </NavLink>
             </li>
             <li className='px-4 py-1.5 hover:bg-blue-600 cursor-pointer'>
-              <NavLink to='/'>Hakkımızda</NavLink>
+              <NavLink onClick={() => setMenu(false)} className='flex' to='/postlar'>
+                Blog
+              </NavLink>
             </li>
-            <li className='group cursor-pointer flex flex-col' tabIndex={0}>
-              <span className='px-4 py-1.5 hover:bg-blue-600 flex'>
+            <li className='px-4 py-1.5 hover:bg-blue-600 cursor-pointer'>
+              <NavLink onClick={() => setMenu(false)} className='flex' to='/duyurular'>
                 Duyurular
-                <svg
-                  width='22'
-                  height='22'
-                  viewBox='0 0 24 24'
-                  fill='none'
-                  className='fill-white group-focus:fill-white/80 flex group-focus:hidden'
-                  xmlns='http://www.w3.org/2000/svg'>
-                  <path d='M12 15.713L18.01 9.70299L16.597 8.28799L12 12.888L7.40399 8.28799L5.98999 9.70199L12 15.713Z'></path>
-                </svg>
-                <svg
-                  width='22'
-                  height='22'
-                  viewBox='0 0 24 24'
-                  className='fill-white group-focus:fill-white/80 hidden group-focus:flex'
-                  fill='none'
-                  xmlns='http://www.w3.org/2000/svg'>
-                  <path d='M12 8.28799L5.98999 14.298L7.40399 15.713L12.004 11.113L16.604 15.713L18.011 14.298L12 8.28799Z'></path>
-                </svg>
-              </span>
-              <ul className='hidden group-focus-within:flex flex-col bg-blue-500 w-full'>
-                <li className=''>
-                  <NavLink
-                    className='flex pl-8 px-2 py-1.5 hover:bg-blue-600 cursor-pointer'
-                    to='/'>
-                    ACM Nedir
-                  </NavLink>
-                </li>
-                <li className=''>
-                  <NavLink
-                    className='flex pl-8 px-2 py-1.5 hover:bg-blue-600 cursor-pointer'
-                    to='/'>
-                    Neler Yapıyoruz
-                  </NavLink>
-                </li>
-                <li className=''>
-                  <NavLink
-                    className='flex pl-8 px-2 py-1.5 hover:bg-blue-600 cursor-pointer'
-                    to='/'>
-                    Ekibimiz
-                  </NavLink>
-                </li>
-              </ul>
+              </NavLink>
             </li>
             <li className='px-4 py-1.5 hover:bg-blue-600 cursor-pointer'>
-              <NavLink to='/'>Blog</NavLink>
-            </li>
-            <li className='px-4 py-1.5 hover:bg-blue-600 cursor-pointer'>
-              <NavLink to='/'>İletişim</NavLink>
+              <NavLink onClick={() => setMenu(false)} className='flex' to='/iletisim'>
+                Hakkımızda & İletişim
+              </NavLink>
             </li>
           </ul>
         </div>

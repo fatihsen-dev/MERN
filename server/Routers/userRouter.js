@@ -1,19 +1,17 @@
 import express from "express";
-import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import User from "../models/userModel.js";
 
-const router = express.Router();
+const userRouter = express.Router();
 
 // localhost:5000/users/signup 'a yapılan post isteği
-router.post("/signup", async (req, res) => {
+userRouter.post("/signup", async (req, res) => {
   try {
-    console.log(req.body);
     const { fullname, password, phoneNumber, email } = req.body;
 
     const userExists = await User.findOne({ email });
     if (userExists) {
-      return res.status(400).json({ message: "User already exists" });
+      return res.status(400).json({ message: "Zaten böyle bir kullanıcımız var" });
     } else {
       const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -32,24 +30,38 @@ router.post("/signup", async (req, res) => {
 });
 
 // localhost:5000/users/signin post request
-router.post("/signin", async (req, res) => {
+userRouter.post("/signin", async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
 
     if (!user) {
-      return res.status(400).json({ message: "User does not exist" });
+      return res.status(400).json({ message: "Kullanıcı bulunamadı" });
     } else {
       const isPasswordCorrect = await bcrypt.compare(password, user.password);
       if (!isPasswordCorrect) {
-        return res.status(400).json({ message: "Wrong Password" });
+        return res.status(400).json({ message: "Şifre yanlış" });
       } else {
-        return res.status(200).json({ user, message: "Authentication successful" });
+        return res.status(200).json({ user, message: "Veri alındı" });
       }
     }
   } catch (error) {
     return res.status(400).json({ message: error.message });
   }
 });
+userRouter.post("/usercontrol", async (req, res) => {
+  if (req.body?.key) {
+    const { key } = req.body;
 
-export default router;
+    User.findOne({ _id: key }, (err, data) => {
+      if (err) {
+        return res.status(400).json({ message: "Kullanıcı bulunamadı" });
+      }
+      return res.json(data);
+    });
+  } else {
+    return res.status(400).json({ message: "Key alınmadı" });
+  }
+});
+
+export default userRouter;
