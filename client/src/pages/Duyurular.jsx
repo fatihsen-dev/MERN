@@ -1,6 +1,6 @@
 export default function Duyurular() {
   return (
-    <div className='grid grid-cols-1 px-5 gap-2 2xl:grid-cols-3 xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1 2xl:px-0 xl:px-0 lg:px-0 md:px-5 sm:px-5 mt-10'>
+    <div className='grid grid-cols-1 mx-3 px-1 gap-2 2xl:grid-cols-3 xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1 2xl:mx-0 xl:mx-0 lg:mx-0 md:mx-3 sm:mx-3 h-full overflow-auto content-start'>
       <div className='flex flex-col p-3 border rounded-sm gap-0.5 first:border-blue-300 shadow-sm shadow-blue-200'>
         <h4 className='font-medium'>Lorem, ipsum dolor.</h4>
         <div className='text-black/80'>

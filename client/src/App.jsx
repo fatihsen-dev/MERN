@@ -59,14 +59,14 @@ export default function App() {
         document.querySelector("#inputTextarea").value = "";
       })
       .catch((err) => {
-        toast.err("Post oluşturulamadı");
+        toast.error("Gönderi oluşturulamadı");
       });
   };
 
   return (
-    <div className='h-full flex w-full flex-col gap-2 bg-[#f9f9f9]'>
+    <div className='h-full flex w-full flex-col'>
       <Nav />
-      <div className='container mx-auto flex flex-col gap-2 flex-1 bg-[#f9f9f9]'>
+      <div className='container ctnr py-4 mx-auto flex-1 flex-col gap-2 h-full'>
         <Routes>
           <Route path='/' element={<Home />} exact />
           {user ? (
@@ -91,7 +91,7 @@ export default function App() {
             className='bg-white flex flex-col shadow-md rounded mt-10 px-8 pt-6 pb-8 mb-4 w-[500px] gap-2'
             onSubmit={formHandle}>
             <div className='flex justify-between items-center mb-3'>
-              <h2 className='font-medium text-xl'>Create Post</h2>
+              <h2 className='font-medium text-xl'>Gönderi oluştur</h2>
               <button onClick={() => dispatch(activeCreatePost())}>
                 <GrFormClose className='text-3xl' />
               </button>
@@ -118,7 +118,11 @@ export default function App() {
               name='text'
               id='inputTextarea'
               placeholder='Yazınız...'></textarea>
-            <button type='submit'>Submit</button>
+            <button
+              className='bg-blue-500 text-white rounded py-2 hover:bg-opacity-90 transition-colors'
+              type='submit'>
+              Oluştur
+            </button>
           </form>
         </div>
       )}

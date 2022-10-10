@@ -46,6 +46,7 @@ blogRouter.get("/user-blogs/:id", async (req, res) => {
   const id = req.params.id;
   blog
     .find({ blogAuthor: id })
+    .sort({ createdDate: -1 })
     .then((data) => {
       return res.status(200).json({ data: data });
     })

@@ -14,7 +14,7 @@ export default function Nav() {
 
   return (
     <div className='bg-blue-500'>
-      <nav className='container mx-auto flex items-centerustify-between text-white font-medium px-3 2xl:px-0 xl:px-0 lg:px-0 md:px-0 sm:px-0 py-2 2xl:py-0 xl:py-0 lg:py-0 md:py-0.5 sm:py-0.5 justify-between'>
+      <nav className='container bg-blue-500 mx-auto flex items-centerustify-between text-white font-medium px-3 2xl:px-0 xl:px-0 lg:px-0 md:px-0 sm:px-0 py-2 2xl:py-0 xl:py-0 lg:py-0 md:py-0.5 sm:py-0.5 justify-between'>
         <h1 className='flex items-center font-medium text-xl whitespace-nowrap'>
           <NavLink to='/'>Mern App</NavLink>
         </h1>

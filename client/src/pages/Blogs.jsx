@@ -16,9 +16,9 @@ export default function Blogs() {
   }, []);
 
   return (
-    <div className='h-full flex justify-center items-start pt-5'>
+    <div className='h-full flex overflow-auto px-2 justify-center items-start'>
       {blogData ? (
-        <ul className='grid grid-cols-1 px-3 gap-4 2xl:grid-cols-3 xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 2xl:px-0 xl:px-0 lg:px-0 md:px-3 sm:px-3'>
+        <ul className='grid flex-1 grid-cols-1 2xl:grid-cols-3 xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 gap-2 '>
           {blogData.map((blog, index) => (
             <li
               className='flex flex-col gap-1 border p-3 rounded-sm w-full overflow-hidden text-ellipsis'
@@ -26,8 +26,10 @@ export default function Blogs() {
               <h2 className='font-bold text-xl w-full overflow-hidden text-ellipsis'>
                 {blog.title}
               </h2>
-              <h4>{blog.explanation}</h4>
-              <span className='text-sm text-black/70 w-full overflow-hidden text-ellipsis'>
+              <h4 className='whitespace-nowrap text-ellipsis overflow-hidden'>
+                {blog.explanation}
+              </h4>
+              <span className='whitespace-nowrap text-ellipsis overflow-hidden'>
                 {blog.text}
               </span>
             </li>
