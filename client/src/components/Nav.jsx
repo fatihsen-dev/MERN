@@ -13,10 +13,15 @@ export default function Nav() {
   const navigate = useNavigate();
 
   return (
-    <div className='bg-blue-500'>
-      <nav className='container bg-blue-500 mx-auto flex items-centerustify-between text-white font-medium px-3 2xl:px-0 xl:px-0 lg:px-0 md:px-0 sm:px-0 py-2 2xl:py-0 xl:py-0 lg:py-0 md:py-0.5 sm:py-0.5 justify-between'>
-        <h1 className='flex items-center font-medium text-xl whitespace-nowrap'>
-          <NavLink to='/'>Mern App</NavLink>
+    <div className='bg-dark'>
+      <nav className='container bg-dark mx-auto flex items-centerustify-between text-white font-medium px-3 2xl:px-0 xl:px-0 lg:px-0 md:px-0 sm:px-0 py-2 2xl:py-0 xl:py-0 lg:py-0 md:py-0.5 sm:py-0.5 justify-between'>
+        <h1 className='flex items-center font-medium text-2xl whitespace-nowrap'>
+          <NavLink className='flex gap-1' to='/'>
+            <span className='text-green-300'>M</span>
+            <span className='text-pink-500'>E</span>
+            <span className='text-blue-500'>R</span>
+            <span className='text-green-500'>N</span>
+          </NavLink>
         </h1>
         <div className='flex items-center gap-3'>
           <ul className='hidden gap-1 2xl:flex xl:flex lg:flex md:flex sm:hidden'>
@@ -61,7 +66,7 @@ export default function Nav() {
               </span>
               <ul className='z-10 absolute w-40 rounded-sm hidden p-1 text-sm flex-col gap-1 bg-[#eee] text-black top-11 group-focus-within:flex'>
                 <NavLink
-                  to='/profil'
+                  to='/profile'
                   className='cursor-pointer px-2 py-1 hover:bg-[#e0e0e0] rounded-sm'>
                   Profilim
                 </NavLink>

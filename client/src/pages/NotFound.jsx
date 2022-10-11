@@ -12,12 +12,11 @@ export default function NotFound() {
           src='https://assets9.lottiefiles.com/temp/lf20_0txt7u.json'
           style={{ height: "100%", width: "100%" }}></Player>
       </div>
-      <h1 className='text-xl'>
-        Back{" "}
+      <span className='text-xl'>
         <NavLink className='text-blue-500 font-medium' to='/'>
           Home
         </NavLink>
-      </h1>
+      </span>
     </h1>
   );
 }

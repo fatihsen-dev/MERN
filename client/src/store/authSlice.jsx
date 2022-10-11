@@ -16,9 +16,6 @@ export const authSlice = createSlice({
       state.key = false;
       localStorage.removeItem("key");
     },
-    userControl: (state, action) => {
-      state.user = state.user;
-    },
   },
 });
 
