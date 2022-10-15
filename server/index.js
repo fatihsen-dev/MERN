@@ -10,20 +10,11 @@ dotenv.config();
 const app = express();
 
 app.use(cors());
-// gelen istekleri filtrelemek için orign kullanabilirsiniz
-// app.use(cors({ origin: "http://localhost:3000" }));
 
 app.use(express.json());
 app.use("/users", userRouter);
 app.use("/blogs", blogRouter);
 
-/* 
-
-app.use("/blogs/all-blogs", (req, res) => {
-  res.status(200).json({ test: "test" });
-});
-
-*/
 
 const port = process.env.PORT || 5000;
 
